@@ -44,7 +44,7 @@ def get_tweets(api):
 def process_tweets(api, tweets):
     for tweet in tweets:
         tweet = api.get_status(tweet.id)
-        logger.info(f"🔎 Searching {result_type} tweets: {tweet.text[:25] + (tweet.text[25:] and '..')}")
+        logger.info(f"🔎 Searching {result_type} tweets: {tweet.text[:20] + (tweet.text[20:] and '..')}")
 
         if tweet.user.id != api.me().id or tweet.in_reply_to_status_id is not None:
 
@@ -52,25 +52,25 @@ def process_tweets(api, tweets):
                 if not tweet.retweeted:
                     try:
                         tweet.retweet()
-                        logger.info(f"👍 We have a tweet from @{tweet.user.screen_name}, retweeting now!")
+                        logger.info(f"👍 Tweet from @{tweet.user.screen_name}, retweeting now!")
                     except Exception as e:
                         logger.error("Error on retweet", exc_info=True)
                         raise e
                 else:
-                    logger.info(f"❌ The tweet from @{tweet.user.screen_name} has already been retweeted.")
+                    logger.info(f"❌ Tweet from @{tweet.user.screen_name} has already been retweeted.")
 
             if like_tweets:
                 if not tweet.favorited:
                     try:
                         tweet.favorite()
-                        logger.info(f"👍 We have a tweet from @{tweet.user.screen_name}, liking now!")
+                        logger.info(f"👍 Tweet from @{tweet.user.screen_name}, liking now!")
                         logger.info(f"⌛ Waiting {process_delay} seconds so we don't flood.")
                         sleep(process_delay)
                     except Exception as e:
                         logger.error("Error on favorite", exc_info=True)
                         raise e
                 else:
-                    logger.info(f"❌ The tweet from @{tweet.user.screen_name} has already been liked.")
+                    logger.info(f"❌ Tweet from @{tweet.user.screen_name} has already been liked.")
 
         sleep(search_delay)
 
