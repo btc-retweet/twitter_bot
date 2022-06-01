@@ -9,7 +9,7 @@ logging.basicConfig(format='%(levelname)s [%(asctime)s] %(message)s', datefmt='%
 logger = logging.getLogger()
 
 # keywords to search for
-search_keywords = "%23bitcoin"
+search_keywords = "#bitcoin"
 
 # time to wait between searching tweets in seconds 
 search_delay = 15 

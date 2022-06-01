@@ -31,9 +31,14 @@ def initialize_api():
     api = create_api()
     return api
 
+def keywords():
+    keywords = search_keywords
+    scrub = urllib.parse.quote(keywords)
+    return scrub
+
 def get_tweets(api):
     tweets = tweepy.Cursor(api.search,
-                    q=search_keywords + " -filter:retweets",
+                    q=keywords() + " -filter:retweets",
                     count=number_of_tweets,
                     result_type=result_type,
                     monitor_rate_limit=True,
