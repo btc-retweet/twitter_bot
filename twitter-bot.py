@@ -1,5 +1,6 @@
 import os
 import logging
+import urllib.parse
 import tweepy
 from time import sleep
 from config import *
