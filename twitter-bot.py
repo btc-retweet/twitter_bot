@@ -80,8 +80,11 @@ def process_tweets(api, tweets):
 
         sleep(search_delay)
 
-def exit_text():
-    logger.info("Goodbye!")
+def quit_message():
+    quit_text = "Goodbye!"
+    quit_log = logger.info(quit_text)
+    return quit_log
+
 
 if __name__ == "__main__":
     welcome = banner_text()
@@ -89,4 +92,4 @@ if __name__ == "__main__":
     tweets = get_tweets(api)
     process_tweets(api, tweets)
 
-exit_text()
+quit_message()
