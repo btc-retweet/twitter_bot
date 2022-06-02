@@ -95,8 +95,7 @@ def process_tweets(api, tweets):
         sleep(search_delay)
 
 def quit_message():
-    quit_text = "✌️ Goodbye!"
-    quit_log = logger.info(quit_text)
+    quit_log = logger.info(f"✌️ Goodbye!")
     return quit_log
 
 if __name__ == "__main__":
