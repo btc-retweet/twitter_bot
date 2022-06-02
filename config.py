@@ -5,7 +5,7 @@ import tweepy
 import logging
 from credentials import *
 
-logging.basicConfig(format='%(levelname)s [%(asctime)s] %(message)s', datefmt='%r', level=logging.INFO)
+logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%r', level=logging.INFO)
 logger = logging.getLogger()
 
 # keywords to search for
@@ -21,7 +21,7 @@ process_delay = 180
 result_type = 'popular'
 
 # number of tweets you want to fetch from twitter 
-number_of_tweets = 60 
+total_tweets = 100 
 
 # like tweets 
 like_tweets = True
