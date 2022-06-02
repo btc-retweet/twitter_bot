@@ -55,8 +55,9 @@ def process_tweets(api, tweets):
     for tweet in tweets:
         tweet = api.get_status(tweet.id)
         search_count = search_count + 1
-        tweet_text = textwrap.shorten(tweet.text, width=48, placeholder='...')
-        logger.info(f"🔎 Searching {result_type} tweets for \"{search_keywords}\"")
+        tweet_text = textwrap.shorten(tweet.text, width=40, placeholder='...')
+        logger.info(f"🔎 Searching {result_type} tweets for \"{search_keywords}\".")
+        sleep(1)
         logger.info(f"🤖 @{tweet.user.screen_name}: {tweet_text}")
 
         if tweet.user.id != api.me().id or tweet.in_reply_to_status_id is not None:
@@ -67,11 +68,13 @@ def process_tweets(api, tweets):
                         tweet.retweet()
                         retweet_count = retweet_count + 1
                         logger.info(f"😀 New tweet from @{tweet.user.screen_name}, retweeting now!")
+                        sleep(1)
                     except Exception as e:
                         logger.error("Error on retweet", exc_info=True)
                         raise e
                 else:
                     logger.info(f"😐 @{tweet.user.screen_name}'s tweet has already been retweeted.")
+                    sleep(1)
 
             if like_tweets:
                 if not tweet.favorited:
@@ -79,13 +82,14 @@ def process_tweets(api, tweets):
                         tweet.favorite()
                         like_count = like_count + 1
                         logger.info(f"😀 New like from @{tweet.user.screen_name}, liking now!")
-                        logger.info(f"⌛ Waiting {process_delay} seconds so we don't flood.")
+                        logger.info(f"⌛ Sleeping {process_delay} seconds so we don't get banned.")
                         sleep(process_delay)
                     except Exception as e:
                         logger.error("Error on favorite", exc_info=True)
                         raise e
                 else:
                     logger.info(f"😐 @{tweet.user.screen_name}'s tweet has already been liked.")
+                    sleep(1)
 
         logger.info(f"🐦 tweets: [{search_count}/{total_tweets}] 🔁 retweets: [{retweet_count}/{total_tweets}] 👍 likes: [{like_count}/{total_tweets}]")
         sleep(search_delay)
