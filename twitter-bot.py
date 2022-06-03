@@ -15,32 +15,27 @@ __status__ = 'Development'
 logging.basicConfig(format='[%(asctime)s] %(message)s', datefmt='%r', level=logging.INFO)
 logger = logging.getLogger()
 
-def banner_text():
-    logger.info("------------------------------------------------------------")
-    logger.info("                                                            ")
-    logger.info("      _______ ________ _______ _______ ______ ___ ___       ")
-    logger.info("     |_     _|  |  |  |    ___|    ___|   __ \   |   |      ")
-    logger.info("       |   | |  |  |  |    ___|    ___|    __/\     /       ")
-    logger.info("       |___| |________|_______|_______|___|    |___|        ")
-    logger.info("                  ______ _______ _______                    ")
-    logger.info("                 |   __ \       |_     _|                   ")
-    logger.info("                 |   __ <   -   | |   |                     ")
-    logger.info("                 |______/_______| |___|                     ")
-    logger.info("                                                            ")
-    logger.info("------------------------------------------------------------")
+logger.info("------------------------------------------------------------")
+logger.info("                                                            ")
+logger.info("      _______ ________ _______ _______ ______ ___ ___       ")
+logger.info("     |_     _|  |  |  |    ___|    ___|   __ \   |   |      ")
+logger.info("       |   | |  |  |  |    ___|    ___|    __/\     /       ")
+logger.info("       |___| |________|_______|_______|___|    |___|        ")
+logger.info("                  ______ _______ _______                    ")
+logger.info("                 |   __ \       |_     _|                   ")
+logger.info("                 |   __ <   -   | |   |                     ")
+logger.info("                 |______/_______| |___|                     ")
+logger.info("                                                            ")
+logger.info("------------------------------------------------------------")
 
 def initialize_api():
     api = create_api()
     return api
 
-def keywords():
-    keywords = search_keywords
-    scrub = urllib.parse.quote(keywords)
-    return scrub
-
 def get_tweets(api):
+    keywords = urllib.parse.quote(search_keywords)
     tweets = tweepy.Cursor(api.search,
-                    q=keywords() + " -filter:retweets",
+                    q=keywords + " -filter:retweets",
                     count=total_tweets,
                     result_type=result_type,
                     monitor_rate_limit=True,
@@ -66,7 +61,7 @@ def process_tweets(api, tweets):
                 if not tweet.retweeted:
                     try:
                         tweet.retweet()
-                        retweet_count = retweet_count + 1
+                        retweet_count = retweet_count +1
                         logger.info(f"😀 New tweet from @{tweet.user.screen_name}, retweeting now!")
                         sleep(1)
                     except Exception as e:
@@ -94,14 +89,8 @@ def process_tweets(api, tweets):
         logger.info(f"🐦 tweets: [{search_count}/{total_tweets}] 🔁 retweets: [{retweet_count}/{total_tweets}] 👍 likes: [{like_count}/{total_tweets}]")
         sleep(search_delay)
 
-def quit_message():
-    quit_log = logger.info(f"✌️ Goodbye!")
-    return quit_log
-
 if __name__ == "__main__":
-    welcome = banner_text()
     api = initialize_api()
     tweets = get_tweets(api)
     process_tweets(api, tweets)
-
-quit_message()
+    logger.info(f"✌️  Goodbye!")
