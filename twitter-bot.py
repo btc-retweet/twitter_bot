@@ -61,7 +61,7 @@ def process_tweets(api, tweets):
                 if not tweet.retweeted:
                     try:
                         tweet.retweet()
-                        retweet_count = retweet_count +1
+                        retweet_count = retweet_count + 1
                         logger.info(f"😀 New tweet from @{tweet.user.screen_name}, retweeting now!")
                         sleep(1)
                     except Exception as e:
